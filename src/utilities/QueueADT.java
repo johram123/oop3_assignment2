@@ -1,5 +1,6 @@
 package utilities;
 
+import exceptions.*;
 public interface QueueADT<E>{
 	
 	/**

@@ -1,5 +1,7 @@
 package utilities;
 
+import exceptions.*;
+
 public interface StackADT<E> {
 	/**
 	 * Constructor method to make a Stack object
