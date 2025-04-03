@@ -188,6 +188,7 @@ public class MyDLL<E> implements ListADT<E> {
 				prevNode.setNext(nextNode);
 				return removedNode;
 			}
+			iter.next();
 		}
 		return null;
 	}
@@ -234,6 +235,7 @@ public class MyDLL<E> implements ListADT<E> {
 			if (iter.getCurrent().getElement() == toFind) {
 				return true;
 			}
+			iter.next();
 		}
 		return false;
 	}

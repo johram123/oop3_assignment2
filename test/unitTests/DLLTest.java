@@ -911,6 +911,8 @@ public class DLLTest
 		int expectedSize = 4;
 		int actualSize = myList.size();
 		
+		System.out.println("Running testRemove_Found()");
+		
 		assertEquals( "Failed to remove the correct item.", expected1, actual1 );
 		assertEquals( "Failed to remove the correct item.", expected2, actual2 );
 		assertEquals( "Size was not updated correctly.", expectedSize, actualSize );
@@ -936,6 +938,8 @@ public class DLLTest
 
 		expectedSize = 2;
 		actualSize = myList.size();
+		
+		
 		
 		assertEquals( "Failed to remove the correct item.", expected1, actual1 );
 		assertEquals( "Failed to remove the correct item.", expected2, actual2 );

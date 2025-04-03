@@ -8,6 +8,10 @@ import utilities.ListADT;
 
 public class MyArrayList<E> implements ListADT<E> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4969942981919551657L;
 	private static int DEFAULT_SIZE = 10;
 	private E[] array;
 	private int size;
