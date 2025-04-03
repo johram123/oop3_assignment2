@@ -72,7 +72,7 @@ public class MyQueue<E> implements QueueADT<E> {
 
     @Override
     public boolean isFull() {
-        return false; // Linked list implementation is never full
+        return false;
     }
 
     @Override
