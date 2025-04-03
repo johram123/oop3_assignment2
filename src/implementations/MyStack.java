@@ -12,8 +12,6 @@ public class MyStack<E> implements StackADT<E> {
 
     @Override
     public void create(int size) {
-        // Workaround since we can't modify MyArrayList
-        // Just create new instance (ignore size parameter)
         stackStorage = new MyArrayList<E>();
     }
 
@@ -51,7 +49,6 @@ public class MyStack<E> implements StackADT<E> {
             return false;
         }
         
-        // Create array copies for comparison
         Object[] thisArray = this.toArray();
         Object[] thatArray = that.toArray();
         
@@ -116,7 +113,7 @@ public class MyStack<E> implements StackADT<E> {
     public int search(E element) {
         for (int i = stackStorage.size() - 1; i >= 0; i--) {
             if (stackStorage.get(i).equals(element)) {
-                return stackStorage.size() - i; // 1-based position from top
+                return stackStorage.size() - i;
             }
         }
         return -1;
