@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.EmptyQueueException;
+import exceptions.*;
 import utilities.Iterator;
 import implementations.MyQueue;
 

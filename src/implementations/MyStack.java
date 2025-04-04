@@ -1,141 +1,128 @@
 package implementations;
 
 import utilities.*;
-import exceptions.*;
+
+import java.util.Arrays;
+import java.util.EmptyStackException;
 
 public class MyStack<E> implements StackADT<E> {
-    private MyArrayList<E> stackStorage;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5032167990915865755L;
+	private MyArrayList<E> stackStorage;
 
-    public MyStack() {
-        stackStorage = new MyArrayList<E>();
-    }
+	public MyStack() {
+		stackStorage = new MyArrayList<E>();
+	}
 
-    @Override
-    public void create(int size) {
-        stackStorage = new MyArrayList<E>();
-    }
+	@Override
+	public void push(E element) throws NullPointerException {
+		stackStorage.add(element);
+	}
 
-    @Override
-    public boolean push(E element) throws ElementCannotBeNullException {
-        if (element == null) {
-            throw new ElementCannotBeNullException("Cannot push null element to stack");
-        }
-        return stackStorage.add(element);
-    }
+	@Override
+	public E pop() throws EmptyStackException {
+		if (isEmpty()) {
+			throw new EmptyStackException();
+		}
+		return stackStorage.remove(stackStorage.size() - 1);
+	}
 
-    @Override
-    public E pop() throws StackEmptyException {
-        if (isEmpty()) {
-            throw new StackEmptyException("Cannot pop from empty stack");
-        }
-        return stackStorage.remove(stackStorage.size() - 1);
-    }
+	@Override
+	public E peek() throws EmptyStackException {
+		if (isEmpty()) {
+			throw new EmptyStackException();
+		}
+		return stackStorage.get(stackStorage.size() - 1);
+	}
 
-    @Override
-    public E peek() throws StackEmptyException {
-        if (isEmpty()) {
-            throw new StackEmptyException("Cannot peek empty stack");
-        }
-        return stackStorage.get(stackStorage.size() - 1);
-    }
+	@Override
+	public boolean equals(StackADT<E> that) {
 
-    @Override
-    public boolean equals(StackADT<E> that) throws InvalidStackCompareException {
-        if (that == null) {
-            throw new InvalidStackCompareException("Cannot compare with null stack");
-        }
-        
-        if (this.size() != that.size()) {
-            return false;
-        }
-        
-        Object[] thisArray = this.toArray();
-        Object[] thatArray = that.toArray();
-        
-        for (int i = 0; i < thisArray.length; i++) {
-            if (!thisArray[i].equals(thatArray[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
+		if (this.size() != that.size()) {
+			return false;
+		}
 
-    @Override
-    public Iterator<E> iterator() {
-        return new StackIterator();
-    }
+		Iterator<E> thisIter = this.iterator();
+		Iterator<E> thatIter = that.iterator();
 
-    private class StackIterator implements Iterator<E> {
-        private int currentPosition = stackStorage.size();
+		while (thisIter.hasNext() && thatIter.hasNext()) {
+			if (!thisIter.next().equals(thatIter.next())) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-        @Override
-        public boolean hasNext() {
-            return currentPosition > 0;
-        }
+	@Override
+	public Iterator<E> iterator() {
+		return new StackIterator<E>(this, stackStorage);
+	}
 
-        @Override
-        public E next() {
-            if (!hasNext()) {
-                throw new java.util.NoSuchElementException();
-            }
-            return stackStorage.get(--currentPosition);
-        }
-    }
+	@Override
+	public Object[] toArray() {
+		Object[] tempArray = new Object[stackStorage.size()];
+		Object[] returnedArray = stackStorage.toArray();
+		for (int i = 0; i < returnedArray.length; i++) {
+			tempArray[i] = returnedArray[returnedArray.length - 1 - i];
+		}
+		return tempArray;
+	}
 
-    @Override
-    public Object[] toArray() {
-        Object[] result = new Object[stackStorage.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = stackStorage.get(stackStorage.size() - 1 - i);
-        }
-        return result;
-    }
+	@Override
+	public E[] toArray(E[] holder) {
+		E[] tempArray = null;
+		if (holder.length < size()) {
+			tempArray = Arrays.copyOf(holder, size());
+		} else {
+			tempArray = holder;
+		}
+		
+		E[] returnedArray = stackStorage.toArray(holder);
+		Iterator<E> iter = this.iterator();
+		for (int i = 0; i < returnedArray.length; i++) {
+			tempArray[i] = iter.next();
+		}
+		return tempArray;
+	}
 
-    @Override
-    public E[] toArray(E[] holder) {
-        if (holder.length < stackStorage.size()) {
-            holder = (E[]) java.lang.reflect.Array.newInstance(
-                holder.getClass().getComponentType(), stackStorage.size());
-        }
-        
-        for (int i = 0; i < stackStorage.size(); i++) {
-            holder[i] = stackStorage.get(stackStorage.size() - 1 - i);
-        }
-        
-        if (holder.length > stackStorage.size()) {
-            holder[stackStorage.size()] = null;
-        }
-        
-        return holder;
-    }
+	@Override
+	public int search(E element) {
+		int counter = 1;
+		Iterator<E> iter = this.iterator();
+		while (iter.hasNext()) {
+			if (iter.next().equals(element)) {
+				return counter;
+			}
+			counter++;
+		}
+		return -1;
+	}
 
-    @Override
-    public int search(E element) {
-        for (int i = stackStorage.size() - 1; i >= 0; i--) {
-            if (stackStorage.get(i).equals(element)) {
-                return stackStorage.size() - i;
-            }
-        }
-        return -1;
-    }
+	@Override
+	public boolean contains(E element) {
+		return stackStorage.contains(element);
+	}
 
-    @Override
-    public boolean contains(E element) {
-        return stackStorage.contains(element);
-    }
+	@Override
+	public int size() {
+		return stackStorage.size();
+	}
 
-    @Override
-    public int size() {
-        return stackStorage.size();
-    }
+	@Override
+	public boolean isEmpty() {
+		return stackStorage.isEmpty();
+	}
 
-    @Override
-    public boolean isEmpty() {
-        return stackStorage.isEmpty();
-    }
+	@Override
+	public void clear() {
+		stackStorage.clear();
+	}
 
-    @Override
-    public void clear() {
-        stackStorage.clear();
-    }
+	@Override
+	public boolean stackOverflow() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

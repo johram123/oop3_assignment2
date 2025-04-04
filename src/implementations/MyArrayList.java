@@ -16,6 +16,7 @@ public class MyArrayList<E> implements ListADT<E> {
 	private E[] array;
 	private int size;
 	
+	@SuppressWarnings("unchecked")
 	public MyArrayList() 
 	{
 		array = (E[]) new Object[DEFAULT_SIZE];

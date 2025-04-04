@@ -1,134 +1,135 @@
 package utilities;
 
-import exceptions.*;
-public interface QueueADT<E>{
-    
-    /**
-     * Enqueue adds an element to the end of the queue
-     * 
-     * @precondition queue must exist
-     * @postcondition element is successfully added into the queue
-     * 
-     * @param element element that will be added
-     * @throws ValueCannotBeNullException the element value cannot be a null value
-     */
-    
-    public void enqueue(E element) throws ValueCannotBeNullException;
-    
-    /**
-     * Dequeue removes the first element from the queue
-     * 
-     * @precondition element must exists in a queue
-     * @postcondition removes the first element from the queue
-     * 
-     * @return a new queue with the first element removed
-     * @throws QueueEmptyException if the queue is empty  
-     */
-    
-    public E dequeue() throws QueueEmptyException;
-    
-    /**
-     * Peek allows you to access the first element without removing
-     * 
-     * @precondition element must exists in a queue
-     * @postcondition retrieves the first element
-     * 
-     * @return first element gets returned
-     * @throws QueueEmptyException cannot access an element if the queue is empty
-     */
-    
-    public E peek() throws QueueEmptyException;
-    
-    /**
-     * Equals compares 2 queue's and checks if the queue are the same length size and order
-     * 
-     * @precondition 2 queue must exists
-     * @postcondition gives a boolean value to indicate the result of comparison
-     * 
-     * @param that the queue is to be compared with
-     * @return returns true if both queue are exactly same, returns false if queue are different
-     * @throws InvalidQueueException if the provided queue is invalid/ if one exist and the other does not exist 
-     */
-    
-    public boolean equals(QueueADT<E> that) throws InvalidQueueException;  // Changed from MyQueueADT to QueueADT
-    
-    /**
-     * Iterator iterates over the elements in the queue
-     * 
-     * @precondition queue must exists
-     * @postcondition gain access to the next element
-     * 
-     * @return an iterator over the elements contained in the queue
-     */
-    
-    public Iterator<E> iterator();
-    
-    /**
-     * toArray turns all elements in the queue to an array
-     * 
-     * @precondition queue must exists
-     * @postcondition gives an array containing all elements in the queue
-     * 
-     * @return Array that completely replicates and converts the queue into an array. Same order and size
-     */
-    
-    public Object[] toArray();
-    
-    /**
-     * Copy the elements of the queue into provided array
-     * 
-     * @precondition queue must exists
-     * @postcondition gives an array with the same elements of the queue
-     * 
-     * @param copy copy the queue element into the array
-     * @return an array containing all elements of the queue
-     */
-    
-    public E[] toArray(E[] copy);
+import exceptions.EmptyQueueException;
+import java.io.*;
 
-    /**
-     * isFull checks if the queue is full
-     * 
-     * @precondition queue must exist
-     * @postcondition gives an boolean value depending on the result
-     * 
-     * @return True if the queue is full, False if not full
-     */
-    
-    public boolean isFull();
-    
-    /**
-     * Sizes checks the size of the queue
-     * 
-     * @precondition queue must exist
-     * @postcondition int value must be given 
-     * 
-     * @return an int value depending on the size of the queue is returned
-     */
-    
-    
-    public int size();
-    
-    /**
-     * dequeueAll removes all the elements in the queue
-     * 
-     * @precondition the queue must exists and is not empty
-     * @postcondition queue must be empty
-     * 
-     * @return a empty queue
-     * @throws QueueEmptyException if the queue is already empty
-     */
+/**
+ * This is the professional Queue Interface for Object-Oriented Programming 3
+ * (CRPG 304) at the SAIT Polytechnic. This Queue embodies all the standard
+ * Queue operations, and includes several helper methods that will give the data
+ * structure more flexibility and use.
+ */
+public interface QueueADT<E> extends Serializable
+{
+	/**
+	 * Enqueue will place the added item at the last position in the queue. This
+	 * method will not allow <code>null</code> values to be added to the Queue.
+	 * 
+	 * @param toAdd the item to be added to the Queue.
+	 * @throws NullPointerException raised when a <code>null</code> object is placed
+	 *                              in the Queue.
+	 */
+	public void enqueue( E toAdd ) throws NullPointerException;
 
-    public E dequeueAll() throws QueueEmptyException;
-    
-    /**
-     * Checks if the queue is empty
-     * 
-     * @precondition queue must exist
-     * @postcondition returns true if queue has no elements, false otherwise
-     * 
-     * @return true if queue is empty, false otherwise
-     */
-    public boolean isEmpty();
+	/**
+	 * Dequeue will remove the first item that was placed in the Queue.
+	 * 
+	 * @return the first item in the Queue.
+	 * @throws EmptyQueueException raised when the queue's length is zero (0).
+	 */
+	public E dequeue() throws EmptyQueueException;
 
+	/**
+	 * Peek provides a reference to the first item in the queue without removing
+	 * from the queue.
+	 * 
+	 * @return the first item in the queue.
+	 * @throws EmptyQueueException raised when the queue's length is zero (0).
+	 */
+	public E peek() throws EmptyQueueException;
+	
+	/**
+	 * dequeueAll removes all items in the queue.
+	 */
+	public void dequeueAll();
+
+	/**
+	 * Returns <code>true</code> when the queue contains no items.
+	 * 
+	 * @return <code>true</code> when queue length is zero (0).
+	 */
+	public boolean isEmpty();
+	
+	/**
+	 * Returns true if this list contains the specified element. More formally,
+	 * returns true if and only if this list contains at least one element e
+	 * such that (o==null ? e==null : o.equals(e)).
+	 * 
+	 * @param toFind
+	 *            element whose presence in this list is to be tested.
+	 * @return true if this list contains the specified element.
+	 * @throws NullPointerException
+	 *             if the specified element is null and this list does not
+	 *             support null elements.
+	 */
+	public boolean contains( E toFind ) throws NullPointerException;
+
+	/**
+	 * Returns the 1-based position where an object is on this queue. If the
+	 * object o occurs as an item in this queue, this method returns the
+	 * distance from the front of the queue of the occurrence nearest the front of
+	 * the queue; the first item on the stack is considered to be at distance
+	 * 1. The equals method is used to compare o to the items in this queue.
+	 * 
+	 * @param toFind
+	 *            the desired object.
+	 * @return the 1-based position from the top of the queue where the object
+	 *         is located; the return value -1 indicates that the object is not
+	 *         on the queue.
+	 */
+	public int search( E toFind );
+
+	/**
+	 * Returns an iterator over the elements in this queue in proper sequence.
+	 * 
+	 * @return an iterator over the elements in this queue in proper sequence.
+	 */
+	public Iterator<E> iterator();
+
+	/**
+	 * Used to compare two Queue ADT's. To be equal two queues must contain equal
+	 * items appearing in the same order.
+	 * 
+	 * @param that the Queue ADT to be compared to this queue.
+	 * @return <code>true</code> if the queues are equal.
+	 */
+	public boolean equals( QueueADT<E> that );
+
+	/**
+	 * Returns an array containing all of the elements in this list in proper
+	 * sequence. Obeys the general contract of the Collection.toArray method.
+	 * 
+	 * @return an array containing all of the elements in this list in proper
+	 *         sequence.
+	 */
+	public Object[] toArray();
+
+	/**
+	 * Returns an array containing all of the elements in this list in proper
+	 * sequence; the runtime type of the returned array is that of the specified
+	 * array. Obeys the general contract of the Collection.toArray(Object[]) method.
+	 * 
+	 * @param toHold the array into which the elements of this queue are to be
+	 *               stored, if it is big enough; otherwise, a new array of the same
+	 *               runtime type is allocated for this purpose.
+	 * @return an array containing the elements of this queue.
+	 * @throws NullPointerException if the specified array is null.
+	 */
+	public E[] toArray( E[] holder ) throws NullPointerException;
+
+	/**
+	 * Returns true if the number of items in the queue equals the
+	 * length. This operation is only implement when a fixed length queue is
+	 * required.
+	 * 
+	 * @return <code>true</code> if queue is at capacity.
+	 */
+	public boolean isFull();
+
+	/**
+	 * Returns the length of the current queue as an integer value.
+	 * 
+	 * @return the current size to the queue as an integer.
+	 */
+	public int size();
 }

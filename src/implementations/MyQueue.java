@@ -4,94 +4,105 @@ import utilities.*;
 import exceptions.*;
 
 public class MyQueue<E> implements QueueADT<E> {
-    private MyDLL<E> queueStorage;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 426764518466227839L;
+	private MyDLL<E> queueStorage;
 
-    public MyQueue() {
-        queueStorage = new MyDLL<E>();
-    }
+	public MyQueue() {
+		queueStorage = new MyDLL<E>();
+	}
 
-    @Override
-    public void enqueue(E element) throws ValueCannotBeNullException {
-        if (element == null) {
-            throw new ValueCannotBeNullException("Cannot enqueue null element");
-        }
-        queueStorage.add(element);
-    }
+	@Override
+	public void enqueue(E element) throws NullPointerException {
+		queueStorage.add(element);
+	}
 
-    @Override
-    public E dequeue() throws QueueEmptyException {
-        if (isEmpty()) {
-            throw new QueueEmptyException("Cannot dequeue from empty queue");
-        }
-        return queueStorage.remove(0);
-    }
+	@Override
+	public E dequeue() throws EmptyQueueException {
+		if (isEmpty()) {
+			throw new EmptyQueueException();
+		}
+		return queueStorage.remove(0);
+	}
 
-    @Override
-    public E peek() throws QueueEmptyException {
-        if (isEmpty()) {
-            throw new QueueEmptyException("Cannot peek empty queue");
-        }
-        return queueStorage.get(0);
-    }
+	@Override
+	public E peek() throws EmptyQueueException {
+		if (isEmpty()) {
+			throw new EmptyQueueException();
+		}
+		return queueStorage.get(0);
+	}
 
-    @Override
-    public boolean equals(QueueADT<E> that) throws InvalidQueueException {
-        if (that == null) {
-            throw new InvalidQueueException("Cannot compare with null queue");
-        }
-        
-        if (this.size() != that.size()) {
-            return false;
-        }
-        
-        Iterator<E> thisIter = this.iterator();
-        Iterator<E> thatIter = that.iterator();
-        
-        while (thisIter.hasNext() && thatIter.hasNext()) {
-            if (!thisIter.next().equals(thatIter.next())) {
-                return false;
-            }
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(QueueADT<E> that) {
 
-    @Override
-    public Iterator<E> iterator() {
-        return queueStorage.iterator();
-    }
+		if (this.size() != that.size()) {
+			return false;
+		}
 
-    @Override
-    public Object[] toArray() {
-        return queueStorage.toArray();
-    }
+		Iterator<E> thisIter = this.iterator();
+		Iterator<E> thatIter = that.iterator();
 
-    @Override
-    public E[] toArray(E[] holder) {
-        return queueStorage.toArray(holder);
-    }
+		while (thisIter.hasNext() && thatIter.hasNext()) {
+			if (!thisIter.next().equals(thatIter.next())) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-    @Override
-    public boolean isFull() {
-        return false;
-    }
+	@Override
+	public Iterator<E> iterator() {
+		return queueStorage.iterator();
+	}
 
-    @Override
-    public int size() {
-        return queueStorage.size();
-    }
+	@Override
+	public Object[] toArray() {
+		return queueStorage.toArray();
+	}
 
-    @Override
-    public E dequeueAll() throws QueueEmptyException {
-        if (isEmpty()) {
-            throw new QueueEmptyException("Queue is already empty");
-        }
-        E firstElement = peek();
-        queueStorage.clear();
-        return firstElement;
-    }
+	@Override
+	public E[] toArray(E[] holder) {
+		return queueStorage.toArray(holder);
+	}
 
-    @Override
-    public boolean isEmpty() {
-        return queueStorage.isEmpty();
-    }
+	@Override
+	public boolean isFull() {
+		return false;
+	}
+
+	@Override
+	public int size() {
+		return queueStorage.size();
+	}
+
+	@Override
+	public void dequeueAll() {
+		queueStorage.clear();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return queueStorage.isEmpty();
+	}
+
+	@Override
+	public boolean contains(E toFind) throws NullPointerException {
+		return queueStorage.contains(toFind);
+	}
+
+	@Override
+	public int search(E toFind) {
+		int counter = 1;
+		Iterator<E> iter = iterator();
+		while (iter.hasNext()) {
+			if (iter.next().equals(toFind)) {
+				return counter;
+			}
+			counter++;
+		}
+		return -1;
+	}
 }
