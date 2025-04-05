@@ -32,7 +32,10 @@ public class MyArrayList<E> implements ListADT<E> {
 	public void clear() {
 		size = 0;
 	}
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		if (toAdd == null)
