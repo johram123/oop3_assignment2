@@ -67,7 +67,8 @@ public class MyArrayList<E> implements ListADT<E> {
 	
 	
 	private void resize() 
-	{
+	{	
+		@SuppressWarnings("unchecked")
 		E[] newArray = (E[]) new Object[array.length * 2];  
 		System.arraycopy(array, 0, newArray, 0, size);  
 		array = newArray;  

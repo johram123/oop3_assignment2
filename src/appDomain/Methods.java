@@ -26,7 +26,7 @@ public class Methods {
 			for (int k = 1; k <= position; k++) {
 				Tag current = stack.pop();
 				if (k != position) {
-					System.out.println("daError at line " + current.lineNumber + ": <" + current.tag
+					System.out.println("Error at line " + current.lineNumber + ": <" + current.tag
 							+ "> is not constructed correctly");
 					errorQ.enqueue(current);
 				}

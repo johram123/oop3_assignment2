@@ -71,12 +71,12 @@ public class CleanUp {
 	 */
 	private void reportErrors() throws EmptyQueueException {
 		while (!extrasQ.isEmpty()) {
-			System.out.println("dError at line: " + extrasQ.peek().lineNumber + " </" + extrasQ.peek().tag
+			System.out.println("Error at line: " + extrasQ.peek().lineNumber + " </" + extrasQ.peek().tag
 					+ "> is not constructed correctly");
 			extrasQ.dequeue();
 		}
 		while (!errorQ.isEmpty()) {
-			System.out.println("gError at line: "+ errorQ.peek().lineNumber+ " <" + errorQ.peek().tag + "> is not constructed correctly");
+			System.out.println("Error at line: "+ errorQ.peek().lineNumber+ " <" + errorQ.peek().tag + "> is not constructed correctly");
 			errorQ.dequeue();
 		}
 	}
