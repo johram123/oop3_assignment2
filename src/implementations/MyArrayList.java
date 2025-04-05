@@ -12,22 +12,34 @@ public class MyArrayList<E> implements ListADT<E> {
 	private E[] array;
 	private int size;
 	
+	/**
+	 * 
+	 */
 	public MyArrayList() 
 	{
 		array = (E[]) new Object[DEFAULT_SIZE];
 		size = 0;
 	}
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public int size() {
         return size;
     }
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void clear() {
 		size = 0;
 	}
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		if (toAdd == null)
@@ -57,7 +69,10 @@ public class MyArrayList<E> implements ListADT<E> {
 		
 	}
 	
-	
+	/**	
+	 * 
+	 * 
+	 */
 	private void resize() 
 	{
 		E[] newArray = (E[]) new Object[array.length * 2];  
@@ -65,6 +80,9 @@ public class MyArrayList<E> implements ListADT<E> {
 		array = newArray;  
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean add(E toAdd) throws NullPointerException {
 		if (toAdd == null)
@@ -81,7 +99,11 @@ public class MyArrayList<E> implements ListADT<E> {
 		size++; 
 		return true; 
 	}
-
+	
+	/**
+	 * 
+	 * 
+	 */
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
 		if (toAdd == null)
@@ -106,7 +128,12 @@ public class MyArrayList<E> implements ListADT<E> {
 		
 		return array[index];
 	}
-
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	@Override
 	public E remove(int index) throws IndexOutOfBoundsException {
 		if (index > size || index < 0)
@@ -125,7 +152,10 @@ public class MyArrayList<E> implements ListADT<E> {
         size--;
         return newArray;
 	}
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public E remove(E toRemove) throws NullPointerException {
 		if (toRemove == null)
