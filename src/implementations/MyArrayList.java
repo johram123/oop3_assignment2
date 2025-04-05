@@ -8,13 +8,16 @@ import utilities.ListADT;
 
 public class MyArrayList<E> implements ListADT<E> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4969942981919551657L;
 	private static int DEFAULT_SIZE = 10;
 	private E[] array;
 	private int size;
 	
-	/**
-	 * 
-	 */
+
+	@SuppressWarnings("unchecked")
 	public MyArrayList() 
 	{
 		array = (E[]) new Object[DEFAULT_SIZE];
@@ -74,7 +77,8 @@ public class MyArrayList<E> implements ListADT<E> {
 	 * 
 	 */
 	private void resize() 
-	{
+	{	
+		@SuppressWarnings("unchecked")
 		E[] newArray = (E[]) new Object[array.length * 2];  
 		System.arraycopy(array, 0, newArray, 0, size);  
 		array = newArray;  
